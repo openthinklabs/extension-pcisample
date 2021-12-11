@@ -1,6 +1,6 @@
 {
 
-    "name": "oat-sa/extension-pcisample",
+    "name": "openthinklabs/extension-pcisample",
     "description" : "",
     "type" : "tao-extension",
     "authors" : [
