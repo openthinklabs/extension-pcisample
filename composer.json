@@ -40,12 +40,24 @@
 		{
 			"type": "vcs",
 			"url": "git@github.com:openthinklabs/extension-tao-itemqti-pci.git"
-		}
+		},
+        {
+            "type": "vcs",
+            "url": "git@github.com:openthinklabs/lib-generis-search.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:openthinklabs/jig.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:openthinklabs/composer-npm-bridge.git"
+        }                        
 	],		    
     "require": {
         "openthinklabs/oatbox-extension-installer": "~1.1||dev-master",
-        "openthinklabs/tao-core" : ">=47.0.0",
-        "openthinklabs/generis" : ">=14.0.0",
+        "openthinklabs/tao-core" : "48.75.0.6",
+        "openthinklabs/generis" : "15.13.1.4",
         "openthinklabs/extension-tao-testqti" : ">=41.0.0",
         "openthinklabs/extension-tao-itemqti-pci" : ">=7.0.0"
     },
@@ -53,5 +65,14 @@
         "psr-4" : {
             "oat\\pciSamples\\" : ""
         }
-    } 
+    },
+    "config": {
+        "allow-plugins": {
+            "oat-sa/composer-npm-bridge": true,
+            "oat-sa/oatbox-extension-installer": true,
+            "composer/package-versions-deprecated": true,
+            "openthinklabs/oatbox-extension-installer": true,
+            "openthinklabs/composer-npm-bridge": true
+        }
+    }
 }
