@@ -2,4 +2,13 @@
 composer.lock
 vendor/
 .idea/
-
+generis/
+qtiItemPci/
+tao/
+taoBackOffice/
+taoDelivery/
+taoItems/
+taoQtiItem/
+taoQtiTest/
+taoResultServer/
+taoTests/
