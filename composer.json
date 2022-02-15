@@ -100,10 +100,10 @@
 	],	    
     "require": {
         "openthinklabs/oatbox-extension-installer": "1.2.2",
-        "openthinklabs/tao-core" : "48.66.1.3",
-        "openthinklabs/generis" : "15.11.0.4",
-        "openthinklabs/extension-tao-testqti" : "42.0.1.1",
-        "openthinklabs/extension-tao-itemqti-pci" : "7.12.2.4"
+        "openthinklabs/tao-core" : "~48.66.1.4",
+        "openthinklabs/generis" : "~15.11.0.4",
+        "openthinklabs/extension-tao-testqti" : "~42.0.1.2",
+        "openthinklabs/extension-tao-itemqti-pci" : "~7.12.2.5"
     },
     "autoload" : {
         "psr-4" : {
