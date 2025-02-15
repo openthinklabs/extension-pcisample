@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-12-04 15:50\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: de\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: /[oat-sa.extension-pcisample] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 651\n"
+"Language-Team: German\n"
+
+msgid "Add page"
+msgstr "Seite hinzufügen"
+
+msgid "Allow multi pages"
+msgstr "Mehrere Seiten erlauben"
+
+msgid "Bottom"
+msgstr "Unterer Rand"
+
+msgid "Button based"
+msgstr "Button-basiert"
+
+msgid "Button labels"
+msgstr "Button Bezeichnung"
+
+msgid "Button labels."
+msgstr "Button Bezeichnung."
+
+msgid "Columns:"
+msgstr "Spalte:"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Display"
+msgstr "Anzeige"
+
+msgid "If this box is checked the text reader will allow to display more than one page and to navigate between them."
+msgstr "Wenn dieses Kästchen markiert ist, ermöglicht der Textleser die Anzeige von mehr als einer Seite und die Navigation zwischen ihnen."
+
+msgid "Left"
+msgstr "Links"
+
+msgid "Navigation"
+msgstr "Navigation"
+
+msgid "Navigation."
+msgstr "Navigation."
+
+msgid "Next"
+msgstr "Nächste"
+
+msgid "Page"
+msgstr "Seite"
+
+msgid "Page height (px)"
+msgstr "Seitenhöhe (Pixel)"
+
+msgid "Page height (px)."
+msgstr "Seitenhöhe (Pixel)."
+
+msgid "Previous"
+msgstr "Vorherige"
+
+msgid "Remove Tooltip"
+msgstr "Hinweis entfernen"
+
+msgid "Right"
+msgstr "Rechts"
+
+msgid "Tab based"
+msgstr "Tab-basiert"
+
+msgid "Tabs + buttons"
+msgstr "Tabs und Buttons"
+
+msgid "Tabs position"
+msgstr "Anordnung der Registerkarten (Tabs)"
+
+msgid "Tabs position."
+msgstr "Anordnung der Registerkarten."
+
+msgid "Tooltips"
+msgstr "Hinweise"
+
+msgid "Top"
+msgstr "Oben"
+

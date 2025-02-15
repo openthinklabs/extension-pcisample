@@ -3,35 +3,34 @@
     "typeIdentifier": "textReaderInteraction",
     "label": "Text reader",
     "description": "The Paging widget combines a scrolling widget with additional paging controls.",
-    "version": "1.1.1",
+    "version": "1.3.3",
     "author": "Aleh Hutnikau",
     "email": "contact@taotesting.com",
-    "tags": [
-        "reader",
-        "paging"
-    ],
+    "tags": ["reader", "paging"],
     "icon": "./creator/media/icon.svg",
     "short": "Text reader",
     "response": {
         "baseType": "boolean",
         "cardinality": "single"
     },
-    "runtime" : {
-        "hook" : "./runtime/textReaderInteraction.min.js",
-        "modules" : {
-            "textReaderInteraction/runtime/textReaderInteraction.min" : [
-                "runtime/textReaderInteraction.min.js"
-            ]
+    "runtime": {
+        "hook": "./runtime/textReaderInteraction.min.js",
+        "modules": {
+            "textReaderInteraction/runtime/textReaderInteraction.min": ["runtime/textReaderInteraction.min.js"]
         },
-        "libraries" : [],
-        "src" : [
-            "./runtime/textReaderInteraction.js"
+        "libraries": [],
+        "src": [
+            "./runtime/textReaderInteraction.js",
+            "./runtime/js/renderer.js",
+            "./runtime/js/tabs.js",
+            "./runtime/css/jquery.qtip.css",
+            "./runtime/css/textReaderInteraction.css"
         ]
     },
-    "creator" : {
+    "creator": {
         "icon": "./creator/media/icon.svg",
         "hook": "./imsPciCreator.min.js",
-        "src" : [
+        "src": [
             "./imsPciCreator.js",
             "./creator/js/userTooltips.js",
             "./creator/tpl/userTooltips/authoring.tpl",
@@ -42,10 +41,9 @@
             "./creator/tpl/pages.tpl",
             "./creator/widget/Widget.js",
             "./creator/widget/states/Question.js",
+            "./creator/widget/states/Sleep.js",
             "./creator/widget/states/states.js"
         ],
-        "stylesheets" : [
-            "./creator/css/textReaderInteraction.css"
-        ]
+        "stylesheets": ["./creator/css/textReaderInteraction.css"]
     }
 }

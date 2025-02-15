@@ -4,9 +4,11 @@ define(
         'taoQtiItem/portableLib/lodash',
         'taoQtiItem/portableLib/handlebars',
         'textReaderInteraction/runtime/js/tabs',
-        'taoQtiItem/portableLib/jquery.qtip'
+        'taoQtiItem/portableLib/OAT/util/tooltip',
+        'taoQtiItem/portableLib/OAT/util/xml',
+        'taoQtiItem/portableLib/jquery.qtip',
     ],
-    function ($, _, Handlebars, Tabs) {
+    function ($, _, Handlebars, Tabs, tooltipRenderer, xmlNsHandler) {
         'use strict';
 
         return function (options) {
@@ -145,6 +147,7 @@ define(
                 var interaction;
                 var renderer;
                 var images;
+                var anchors;
 
                 this.options.$container.trigger('beforerenderpages.' + self.eventNs);
 
@@ -154,16 +157,32 @@ define(
 
                     markup = self.options.templates.pages(templateData, self.getTemplateOptions());
 
-                    // resolve image source
+                    markup = xmlNsHandler.removeNamespace(markup); //<qh5:figure>, <qh5:figcaption>
+
                     elements = $.parseHTML(markup, document.implementation.createHTMLDocument('virtual')) || [];
                     interaction = self.options.interaction;
                     renderer = interaction && interaction.renderer;
-                    markup = elements.map(function(element) {
+                    markup = elements.map((element) => {
                         var selectorContainer = document.createElement('div');
                         selectorContainer.appendChild(element);
+
+                        // image wrap-left/wrap-right/centering
+                        const figures = selectorContainer.querySelectorAll('figure');
+                        figures.forEach((figure) => {
+                            const image = figure.querySelector('img');
+                            if (image) {
+                                const imageWidth = image.getAttribute('width');
+                                if (imageWidth) {
+                                    figure.style.width = imageWidth;
+                                    image.setAttribute('width', '100%');
+                                }
+                            }
+                        });
+
+                        // resolve image source
                         images = selectorContainer.querySelectorAll('img');
                         images = [].slice.call(images);
-                        images.forEach(function(image) {
+                        images.forEach((image) => {
                             var src = image.getAttribute('src');
                             var content = data['content-' + src];
                             if (renderer) {
@@ -172,12 +191,30 @@ define(
                                 image.setAttribute('src', content);
                             }
                         });
+
+
+                        // open links in another tab
+                        anchors = selectorContainer.querySelectorAll('a');
+                        anchors.forEach((anchor) => {
+                            var href = anchor.getAttribute('href');
+                            if (href && !href.trim().startsWith('#')) {
+                                anchor.setAttribute('target', '_blank');
+                                anchor.setAttribute('rel', 'noopener noreferer');
+                            }
+                        });
                         return element.outerHTML || element.textContent;
                     }).join('');
 
                     $container = this.options.$container.find('.js-page-container')
                         .html(markup)
                         .toggleClass('light-mode', !templateData.multiPages);
+
+                    if (data.hideTooltips) {
+                        //remove tooltip anchors
+                        $container.find('[data-role="tooltip-target"]').removeAttr('data-role').removeAttr('aria-describedby');
+                    } else {
+                        tooltipRenderer.render($container);
+                    }
                 }
 
                 //init tabs
@@ -216,44 +253,6 @@ define(
             };
 
             /**
-             * Function renders tooltips in pages
-             * @return {object} this
-             */
-            this.renderTooltips = function(data) {
-                var tooltipsData = (_.isArray(data.tooltips)) ? data.tooltips : [],
-                    $tooltips = this.options.$container.find('.tooltip'),
-                    tooltipsContent = {};
-
-                tooltipsData.forEach(function(tooltipData) {
-                    tooltipsContent[tooltipData.id] = tooltipData.content;
-                });
-
-                $tooltips.each(function() {
-                    var $currentTooltip = $(this),
-                        currentId = $currentTooltip.data('identifier'),
-                        content = tooltipsContent[currentId];
-
-                    if (content && content.trim()) {
-                        $currentTooltip.addClass('tooltip-active');
-                        $currentTooltip.qtip({
-                            overwrite: true,
-                            theme: 'default',
-                            content: {
-                                text: content
-                            },
-                            position: {
-                                target: 'mouse',
-                                my: 'bottom center',
-                                at: 'top center'
-                            }
-                        });
-                    }
-                });
-
-                return this;
-            };
-
-            /**
              * Function renders interaction navigation (<i>Prev</i> <i>Next</i> buttons, current page number).
              * @param {object} data - interaction properties
              * @return {object} this
@@ -282,7 +281,6 @@ define(
              */
             this.renderAll = function (data) {
                 this.renderPages(data);
-                this.renderTooltips(data);
                 this.renderNavigation(data);
                 return this;
             };

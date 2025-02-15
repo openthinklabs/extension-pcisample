@@ -5,6 +5,16 @@
         .tr-passage-column {
             border: 1px dashed #3E7DA7;
         }
+        .tr-page {
+            overflow-y: visible;
+        }
+
+        /* cleanup after figure/image wrap-left/wrap-right */
+        .container-editor:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
     }
 }
 
@@ -41,6 +51,15 @@
 
             &:hover {
                 color: #a4bbc5;
+            }
+        }
+
+        .mini-tlb {
+            z-index: 1000; /* above html-editable-shield */
+            right: -22px !important;
+
+            .icon-bin {
+                margin: 0;
             }
         }
     }

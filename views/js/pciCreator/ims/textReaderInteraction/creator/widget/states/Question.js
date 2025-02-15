@@ -47,7 +47,7 @@ define([
             $form = self.widget.$form,
             interaction = self.widget.element,
             properties = interaction.properties,
-            pageIds = _.pluck(properties.pages, 'id'),
+            pageIds = _.map(properties.pages, 'id'),
             maxPageId = Math.max.apply(null, pageIds),
             tooltipBuffer;
 
@@ -62,7 +62,7 @@ define([
                 },
                 currentPage = 0;
 
-            containerEditor.destroy($container.find('.tr-passage'));
+            destroyContainerEditor(containerEditor, $container.find('.tr-passage'));
 
             if ($button.hasClass('js-add-page-before')) {
                 properties.pages.unshift(pageData);
@@ -79,7 +79,7 @@ define([
         $container.on('click.' + interaction.typeIdentifier, '.js-remove-page', function () {
             var tabNum = $(this).data('page-num');
 
-            containerEditor.destroy($container.find('.tr-passage'));
+            destroyContainerEditor(containerEditor, $container.find('.tr-passage'));
             properties.pages.splice(tabNum, 1);
             interaction.widgetRenderer.renderAll(properties);
         });
@@ -127,7 +127,7 @@ define([
 
         //Destroy page CKeditors when page rerenders
         $container.on('beforerenderpages.' + interaction.typeIdentifier, function () {
-            containerEditor.destroy($container.find('.tr-passage'));
+            destroyContainerEditor(containerEditor, $container.find('.tr-passage'));
         });
 
         //Init page CKeditors after render
@@ -200,8 +200,8 @@ define([
 
         $container.off('.' + interaction.typeIdentifier);
 
-        containerEditor.destroy($container.find('.js-page-column'));
-        
+        destroyContainerEditor(containerEditor, $container.find('.js-page-column'));
+
         creatorContext.trigger('registerBeforeSaveProcess', new Promise(function(resolve, reject) {
             var assetManager = interaction.renderer.getAssetManager();
             var sources = [];
@@ -353,28 +353,32 @@ define([
      * @returns {undefined}
      */
     function initEditors($container, interaction) {
-        var widget = interaction.data('widget'),
+        $container.attr('data-element-support-figure', 'true');
+
+        const widget = interaction.data('widget'),
             $pages = $container.find('.js-tab-content'),
             editorsReady = [];
 
         $pages.each(function () {
-            var pageId = $(this).data('page-id'),
+            const pageId = $(this).data('page-id'),
                 pageIndex = $(this).data('page-num');
 
             $(this).find('.js-page-column').each(function () {
-                var $editor = $(this),
+                const $editor = $(this),
                     colIndex = $editor.data('page-col-index');
 
                 editorsReady.push(new Promise(function(resolve) {
                     containerEditor.create($editor, {
-                        change : function (text) {
+                        change: function (text) {
                             saveColumn(interaction, pageId, this.colIndex, text);
                         },
                         markup : interaction.properties.pages[pageIndex].content[colIndex],
                         related : interaction,
                         colIndex : colIndex,
                         highlight: true,
-                        areaBroker: widget.getAreaBroker()
+                        areaBroker: widget.getAreaBroker(),
+                        qtiInclude: false,
+                        flushDeletingWidgetsOnDestroy: true
                     });
 
                     $editor.on('editorready', function() {
@@ -389,7 +393,7 @@ define([
 
     /**
      * Converts url to data url
-     * @param {String} url 
+     * @param {String} url
      */
     function toDataUrl(url) {
         return new Promise(function(resolve) {
@@ -409,10 +413,10 @@ define([
 
     /**
      * Save column content
-     * @param {Object} interaction 
-     * @param {String} pageId 
-     * @param {String} colIndex 
-     * @param {String} text 
+     * @param {Object} interaction
+     * @param {String} pageId
+     * @param {String} colIndex
+     * @param {String} text
      * @returns {Promise<void>}
      */
     function saveColumn(interaction, pageId, colIndex, text) {
@@ -422,6 +426,17 @@ define([
         if (pageData && typeof pageData.content[colIndex] !== 'undefined') {
             pageData.content[colIndex] = text;
         }
+    }
+
+    function destroyContainerEditor(containerEditor, $container) {
+        //fix for Table widget - content is not saved if it's destroyed while in 'active' state
+        $container.find('.widget-table').each(function( idx, elem ) {
+            const widget = $(elem).data('widget');
+            if (widget && widget.getCurrentState().name !== 'sleep') {
+                widget.changeState('sleep');
+            }
+        });
+        containerEditor.destroy($container);
     }
 
     return stateQuestion;

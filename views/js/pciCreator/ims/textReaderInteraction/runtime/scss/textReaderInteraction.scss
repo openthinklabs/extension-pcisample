@@ -5,6 +5,27 @@ $buttonBgColor: #266d9c;
 $buttonDisabledColor: #000;
 $buttonDisabledBgDolor: #afb4bb;
 
+@mixin tooltip-styles {
+    color: $textColor;
+    outline: none;
+    text-decoration: underline;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        color: $info;
+    }
+
+    &:focus-visible {
+        color: $info;
+        border: 1px dashed $info;
+    }
+
+    &:after {
+        content: none;
+    }
+}
+
 .textReaderInteraction {
     margin-top: 10px;
 
@@ -77,6 +98,10 @@ $buttonDisabledBgDolor: #afb4bb;
         box-shadow: 1px 1px 3px 0 #888888;
         margin: 10px;
         overflow-y: auto;
+
+        table td, table th {
+            border: 1px solid currentColor;
+        }
     }
 
     .light-mode {
@@ -323,24 +348,26 @@ $buttonDisabledBgDolor: #afb4bb;
         margin-left: 70px;
         border-left: 1px solid #dddddd;
     }
+
+    [data-role="tooltip-target"] {
+        @include tooltip-styles();
+    }
+
+    /* tooltips */
+    [data-role="tooltip-content"] {
+        &[aria-hidden="true"] {
+            display: none;
+        }
+    }
 }
 
-/* tooltips */
-.qti-item {
-    .tooltip-active {
-        color: $info;
-        text-decoration: dashed underline $info;
-        cursor: pointer;
-
-        &:after {
-            @include tao-icon-setup;
-            @include icon-info;
-
-            font-size: 0.9rem;
-            vertical-align: super;
-            margin-left: 2px;
-            display: inline-block;
-            text-decoration: none;
+/* tooltips override styles for the previewer */
+.preview-container {
+    .qti-item {
+        .textReaderInteraction {
+            [data-role="tooltip-target"] {
+                @include tooltip-styles();
+            }
         }
     }
 }
