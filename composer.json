@@ -21,12 +21,12 @@
     },
     "minimum-stability" : "dev",
     "require": {
-        "openthinklabs/oatbox-extension-installer": "~1.1||dev-master",
-        "openthinklabs/tao-core": ">=54.26.0||dev-master",
-        "openthinklabs/generis": ">=16.0.0||dev-master",
-        "openthinklabs/extension-tao-testqti": ">=41.0.0||dev-master",
-        "openthinklabs/extension-tao-itemqti-pci": ">=7.0.0||dev-master",
-        "openthinklabs/extension-tao-mediamanager": ">=12.0.0||dev-master"
+        "openthinklabs/oatbox-extension-installer": "dev-master",
+        "openthinklabs/tao-core": "dev-master",
+        "openthinklabs/generis": "dev-master",
+        "openthinklabs/extension-tao-testqti": "dev-master",
+        "openthinklabs/extension-tao-itemqti-pci": "dev-master",
+        "openthinklabs/extension-tao-mediamanager": "dev-master"
     },
     "autoload" : {
         "psr-4" : {
